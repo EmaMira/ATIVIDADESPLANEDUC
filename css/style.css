@@ -1,0 +1,215 @@
+/* Importação das fontes locais do Planeduc */
+@font-face {
+    font-family: 'IntroScriptDemo';
+    src: url('../fonts/IntroScriptDemo-Medium.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Raleway';
+    src: url('../fonts/Raleway-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Visby';
+    src: url('../fonts/VisbyBold.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Visby';
+    src: url('../fonts/VisbyMedium.otf') format('opentype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Raleway', sans-serif;
+    /* Fundo suave combinando com a paleta do app */
+    background-color: #f4f5f7;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Container Principal do Painel Duplo */
+.container {
+    background-color: #fff;
+    width: 960px;
+    height: 580px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+}
+
+/* Colunas (Lateral e Formulário) */
+.first-column {
+    flex: 1;
+    background: linear-gradient(135deg, #8c533e, #744331); /* Tom terroso do Planeduc */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    padding: 30px;
+}
+
+.second-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    background-color: #fff;
+}
+
+/* Tipografia com as fontes do Planeduc */
+.title {
+    font-family: 'Visby', sans-serif;
+    font-size: 28px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.title-primary {
+    color: #fff;
+    font-family: 'IntroScriptDemo', cursive; /* Toque especial com a fonte da coruja */
+    font-size: 42px;
+    text-transform: none;
+    margin-bottom: 10px;
+}
+
+.title-second {
+    color: #A3292D; /* Cor oficial do Planeduc */
+    margin-bottom: 20px;
+}
+
+.description {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #f0e6e6;
+}
+
+.description-second {
+    color: #666;
+    margin-bottom: 15px;
+}
+
+/* Formulários e Inputs */
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+}
+
+.label-input {
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    margin: 8px 0;
+    padding: 0 15px;
+    transition: all 0.3s ease;
+}
+
+.label-input:focus-within {
+    border-color: #8c533e;
+    background-color: #fff;
+    box-shadow: 0 0 0 3px rgba(140, 83, 62, 0.15);
+}
+
+.icon-modify {
+    color: #8c533e;
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+.label-input input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 12px 0;
+    font-family: 'Raleway', sans-serif;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Botões Estilizados */
+.btn {
+    border-radius: 12px;
+    border: none;
+    font-family: 'Visby', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 12px 25px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    margin-top: 15px;
+}
+
+.btn-primary {
+    background-color: transparent;
+    border: 2px solid #fff;
+    color: #fff;
+    margin-top: 20px;
+}
+
+.btn-primary:hover {
+    background-color: #fff;
+    color: #8c533e;
+}
+
+.btn-second {
+    background-color: #8c533e;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(140, 83, 62, 0.25);
+}
+
+.btn-second:hover {
+    background-color: #744331;
+    transform: translateY(-2px);
+}
+
+/* Links auxiliares */
+.password {
+    color: #666;
+    font-size: 12px;
+    text-decoration: none;
+    margin: 10px 0;
+    text-align: right;
+    transition: color 0.2s;
+}
+
+.password:hover {
+    color: #A3292D;
+}
