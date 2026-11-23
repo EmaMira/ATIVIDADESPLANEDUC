@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planeduc - Períodos e Campos de Experiência</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        @font-face {
+            font-family: 'IntroScriptDemo';
+            src: url('fonts/IntroScriptDemo-Medium.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Raleway';
+            src: url('fonts/Raleway-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Visby';
+            src: url('fonts/VisbyBold.otf') format('opentype');
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            background-color: #F9F1E2;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+        }
+
+        .screen-card {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 1120px;
+            border-radius: 24px;
+            padding: 32px 36px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav-top {
+            background-color: #8c533e;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 18px;
+            font-family: 'Visby', sans-serif;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .btn-nav-top:hover {
+            background-color: #744331;
+            transform: translateY(-1px);
+        }
+
+        .period-switcher {
+            display: flex;
+            gap: 8px;
+            background-color: #F9F1E2;
+            padding: 6px;
+            border-radius: 12px;
+        }
+
+        .period-tab {
+            border: none;
+            background: transparent;
+            color: #8c533e;
+            font-family: 'Visby', sans-serif;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+        }
+
+        .period-tab.active {
+            background-color: #A3292D;
+            color: #ffffff;
+        }
+
+        .header-center {
+            text-align: center;
+        }
+
+        .period-heading {
+            font-family: 'Visby', sans-serif;
+            font-size: 26px;
+            font-weight: bold;
+            color: #A3292D;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .section-subheading {
+            font-family: 'Visby', sans-serif;
+            font-size: 13px;
+            color: #8c533e;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-top: 4px;
+        }
+
+        .section-desc {
+            font-size: 14px;
+            color: #444444;
+            max-width: 780px;
+            margin: 8px auto 0;
+            line-height: 1.5;
+        }
+
+        /* Visão 1: Campos de Experiência */
+        .fields-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 16px;
+        }
+
+        .field-card {
+            background-color: #F9F1E2;
+            border-left: 6px solid #8c533e;
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 12px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .field-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .field-card h3 {
+            font-family: 'Visby', sans-serif;
+            font-size: 15px;
+            color: #A3292D;
+            text-transform: uppercase;
+            line-height: 1.35;
+        }
+
+        .field-card p {
+            font-size: 13px;
+            color: #444444;
+            line-height: 1.45;
+        }
+
+        .field-link-hint {
+            font-family: 'Visby', sans-serif;
+            font-size: 11px;
+            color: #8c533e;
+            text-transform: uppercase;
+        }
+
+        /* Visão 2: Grade 3x2 com Scroll */
+        .grid-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .scroll-area {
+            flex: 1;
+            max-height: 540px;
+            overflow-y: auto;
+            padding: 6px 8px 14px 4px;
+        }
+
+        .scroll-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .scroll-area::-webkit-scrollbar-track {
+            background: #F9F1E2;
+            border-radius: 10px;
+        }
+
+        .scroll-area::-webkit-scrollbar-thumb {
+            background: #8c533e;
+            border-radius: 10px;
+        }
+
+        .cards-grid-3x2 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .activity-card {
+            background-color: #F9F1E2;
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid #eadcc4;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 225px;
+            gap: 14px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .activity-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
+        }
+
+        .bncc-code {
+            font-family: 'Visby', sans-serif;
+            font-size: 13px;
+            color: #A3292D;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .bncc-text {
+            font-size: 13px;
+            color: #333333;
+            line-height: 1.45;
+        }
+
+        .btn-ver-atividade {
+            align-self: flex-end;
+            background-color: #A3292D;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 9px 16px;
+            font-family: 'Visby', sans-serif;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-ver-atividade:hover {
+            background-color: #821f22;
+        }
+
+        .arrow-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .arrow-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 2px solid #8c533e;
+            background-color: #ffffff;
+            color: #A3292D;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            transition: background-color 0.2s ease;
+        }
+
+        .arrow-btn:hover {
+            background-color: #F9F1E2;
+        }
+
+        /* Visão 3: Detalhe da Atividade e Download PDF */
+        .detail-layout {
+            max-width: 680px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        #fichaPdfArea {
+            background-color: #F9F1E2;
+            border-radius: 18px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .detail-meta-code {
+            font-family: 'Visby', sans-serif;
+            font-size: 15px;
+            color: #A3292D;
+            text-transform: uppercase;
+        }
+
+        .detail-meta-objective {
+            font-size: 14px;
+            color: #333333;
+            font-weight: 600;
+        }
+
+        .sheet-box {
+            background-color: #ffffff;
+            border: 2px dashed #8c533e;
+            border-radius: 14px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .sheet-brand {
+            font-family: 'IntroScriptDemo', cursive;
+            font-size: 28px;
+            color: #A3292D;
+            text-align: right;
+            line-height: 1;
+        }
+
+        .sheet-title {
+            font-family: 'IntroScriptDemo', cursive;
+            font-size: 36px;
+            color: #2c2c2c;
+            text-align: center;
+            line-height: 1.1;
+        }
+
+        .sheet-name-line {
+            font-size: 14px;
+            color: #333333;
+            border-bottom: 1px solid #8c533e;
+            padding-bottom: 6px;
+        }
+
+        .sheet-prompt {
+            text-align: center;
+            font-size: 12px;
+            color: #444444;
+            line-height: 1.45;
+        }
+
+        .sheet-prompt strong {
+            display: block;
+            font-family: 'Visby', sans-serif;
+            color: #A3292D;
+            margin-bottom: 4px;
+            font-size: 13px;
+        }
+
+        .faces-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-top: 4px;
+        }
+
+        .face-slot {
+            border: 1px solid #e5d8c3;
+            border-radius: 12px;
+            padding: 14px 10px;
+            text-align: center;
+            background-color: #fffdfa;
+        }
+
+        .face-circle {
+            width: 68px;
+            height: 68px;
+            border: 2px solid #333333;
+            border-radius: 50%;
+            margin: 0 auto 8px;
+        }
+
+        .face-label {
+            font-family: 'Visby', sans-serif;
+            font-size: 12px;
+            color: #2c2c2c;
+            text-transform: uppercase;
+        }
+
+        .sheet-description {
+            font-size: 13px;
+            color: #333333;
+            line-height: 1.5;
+            background-color: #ffffff;
+            padding: 14px 16px;
+            border-radius: 12px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-download-pdf {
+            background-color: #A3292D;
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            padding: 13px 28px;
+            font-family: 'Visby', sans-serif;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(163, 41, 45, 0.25);
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .btn-download-pdf:hover {
+            background-color: #821f22;
+            transform: translateY(-2px);
+        }
+
+        .btn-voltar-brown {
+            background-color: #8c533e;
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            padding: 13px 28px;
+            font-family: 'Visby', sans-serif;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(140, 83, 62, 0.25);
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .btn-voltar-brown:hover {
+            background-color: #744331;
+            transform: translateY(-2px);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 900px) {
+            .cards-grid-3x2 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .screen-card {
+                padding: 22px 18px;
+            }
+
+            .cards-grid-3x2 {
+                grid-template-columns: 1fr;
+            }
+
+            .arrow-controls {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="screen-card">
+        <div class="top-bar">
+            <button type="button" class="btn-nav-top" id="btnTopBack">
+                <i class="fas fa-arrow-left"></i>
+                <span id="btnTopBackLabel">Menu Principal</span>
+            </button>
+
+            <div class="period-switcher" role="tablist" aria-label="Selecionar Período">
+                <button type="button" class="period-tab" data-period="1">1° Período</button>
+                <button type="button" class="period-tab" data-period="2">2° Período</button>
+            </div>
+        </div>
+
+        <!-- ETAPA 1: CAMPOS DE EXPERIÊNCIA -->
+        <section id="viewFields">
+            <div class="header-center">
+                <h1 class="period-heading" id="fieldsPeriodTitle">1° Período</h1>
+                <div class="section-subheading">Campos de Experiência</div>
+            </div>
+
+            <div class="fields-list" id="fieldsContainer"></div>
+        </section>
+
+        <!-- ETAPA 2: GRADE 3X2 COM SCROLL -->
+        <section id="viewActivities" class="hidden">
+            <div class="header-center">
+                <h1 class="period-heading" id="fieldTitle">O Eu, o Outro e o Nós</h1>
+                <p class="section-desc" id="fieldDescription"></p>
+            </div>
+
+            <div class="grid-wrapper">
+                <div class="scroll-area" id="activitiesScrollArea">
+                    <div class="cards-grid-3x2" id="activitiesGrid"></div>
+                </div>
+
+                <div class="arrow-controls">
+                    <button type="button" class="arrow-btn" id="btnScrollUp" title="Rolar para cima">↑</button>
+                    <button type="button" class="arrow-btn" id="btnScrollDown" title="Rolar para baixo">↓</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ETAPA 3: DETALHE DA ATIVIDADE E DOWNLOAD PDF -->
+        <section id="viewDetail" class="hidden">
+            <div class="detail-layout">
+                <div id="fichaPdfArea">
+                    <div>
+                        <div class="detail-meta-code" id="detailCode"></div>
+                        <div class="detail-meta-objective" id="detailObjective"></div>
+                    </div>
+
+                    <div class="sheet-box">
+                        <div class="sheet-brand">Planeduc</div>
+                        <div class="sheet-title">Atividade</div>
+                        <div class="sheet-name-line">Nome: ____________________________________________________</div>
+
+                        <div class="sheet-prompt">
+                            <strong id="detailPromptTitle"></strong>
+                            <span id="detailPromptText"></span>
+                        </div>
+
+                        <div class="faces-grid" id="detailFacesGrid"></div>
+                    </div>
+
+                    <div class="sheet-description" id="detailBehavioralDesc"></div>
+                </div>
+
+                <div class="action-buttons">
+                    <button type="button" class="btn-download-pdf" id="btnDownloadPdf">Download</button>
+                    <button type="button" class="btn-voltar-brown" id="btnDetailBack">Voltar</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const PERIODOS_DATA = {
+            "1": {
+                label: "1° Período",
+                faixa: "4 anos a 5 anos",
+                campos: [
+                    {
+                        id: "eu-outro-nos",
+                        nome: "O Eu, o Outro e o Nós",
+                        descricao: "Amplia relações interpessoais, respeito à diversidade e autonomia na resolução de conflitos.",
+                        atividades: [
+                            {
+                                codigo: "EI03EO02",
+                                resumo: "Realizar com autonomia as Atividades da Vida Diária (AVD): trocar de roupas, escovar os dentes, usar o sanitário, pentear os cabelos, alimentar-se, lavar e enxugar as mãos, banhar-se, beber água.",
+                                fichaCodigo: "EI03EO-MCP05",
+                                objetivo: "Expressar sentimentos e retribuir boas ações.",
+                                promptTitle: "COMO VOCÊ ESTÁ SE SENTINDO?",
+                                promptText: "Olhe os espaços abaixo. Cada um deve mostrar um sentimento diferente. Desenhe o rostinho mostrando a emoção que está escrita embaixo. Você pode fazer carinha feliz, triste, com medo, com amor... do jeitinho que imaginar.",
+                                itens: ["TRISTEZA", "MEDO", "ALEGRIA", "DOR", "SAUDADE", "AMOR"],
+                                descricaoPedagogica: "Descrição: Desenvolver atitudes comportamentais que expressam bons sentimentos através da interação e socialização com os outros."
+                            },
+                            {
+                                codigo: "EI03EO02",
+                                resumo: "Realizar com autonomia as Atividades da Vida Diária (AVD): trocar de roupas, escovar os dentes, usar o sanitário, pentear os cabelos, alimentar-se, lavar e enxugar as mãos, banhar-se, beber água.",
+                                fichaCodigo: "EI03EO-MCP02",
+                                objetivo: "Praticar hábitos de autocuidado e higiene no cotidiano.",
+                                promptTitle: "MEU CUIDADO DIÁRIO",
+                                promptText: "Observe cada momento da rotina abaixo e desenhe como você realiza essas ações no seu dia a dia.",
+                                itens: ["ESCOVAR DENTES", "LAVAR AS MÃOS", "TOMAR BANHO", "PENTEAR CABELO", "TROCAR ROUPA", "BEBER ÁGUA"],
+                                descricaoPedagogica: "Descrição: Estimular a autonomia e o cuidado com o próprio corpo nas rotinas diárias."
+                            },
+                            {
+                                codigo: "EI03EO02",
+                                resumo: "Realizar com autonomia as Atividades da Vida Diária (AVD): trocar de roupas, escovar os dentes, usar o sanitário, pentear os cabelos, alimentar-se, lavar e enxugar as mãos, banhar-se, beber água.",
+                                fichaCodigo: "EI03EO-MCP03",
+                                objetivo: "Reconhecer atitudes de convivência e respeito coletivo.",
+                                promptTitle: "CONVIVER E PARTILHAR",
+                                promptText: "Desenhe como podemos ajudar os colegas e manter a sala organizada juntos.",
+                                itens: ["PARTILHAR", "OUVIR O COLEGA", "GUARDAR BRINQUEDOS", "PEDIR LICENÇA", "AJUDAR", "SORRIR"],
+                                descricaoPedagogica: "Descrição: Fortalecer vínculos afetivos e atitudes cooperativas entre as crianças."
+                            },
+                            {
+                                codigo: "EI03EO02",
+                                resumo: "Realizar com autonomia as Atividades da Vida Diária (AVD): trocar de roupas, escovar os dentes, usar o sanitário, pentear os cabelos, alimentar-se, lavar e enxugar as mãos, banhar-se, beber água.",
+                                fichaCodigo: "EI03EO-MCP04",
+                                objetivo: "Identificar emoções em diferentes situações do dia.",
+                                promptTitle: "CARINHAS E EMOÇÕES",
+                                promptText: "Complete cada espaço com a expressão correspondente ao sentimento indicado.",
+                                itens: ["CALMA", "SURPRESA", "ALEGRIA", "CARINHO", "TRISTEZA", "CORAGEM"],
+                                descricaoPedagogica: "Descrição: Ampliar o repertório emocional e a capacidade de nomear sentimentos."
+                            },
+                            {
+                                codigo: "EI03EO02",
+                                resumo: "Realizar com autonomia as Atividades da Vida Diária (AVD): trocar de roupas, escovar os dentes, usar o sanitário, pentear os cabelos, alimentar-se, lavar e enxugar as mãos, banhar-se, beber água.",
+                                fichaCodigo: "EI03EO-MCP06",
+                                objetivo: "Valorizar a própria identidade e a diversidade do grupo.",
+                                promptTitle: "EU SOU ASSIM",
+                                promptText: "Desenhe o seu rostinho e o que você mais gosta de fazer na escola.",
+                                itens: ["MEU ROSTO", "MEU BRINQUEDO", "MEU AMIGO", "MINHA FAMÍLIA", "MINHA COR FAVORITA", "MEU LANCHE"],
+                                descricaoPedagogica: "Descrição: Promover a autoconfiança e o reconhecimento da identidade individual e coletiva."
+                            },
+                            {
+                                codigo: "EI03EO02",
+                                resumo: "Realizar com autonomia as Atividades da Vida Diária (AVD): trocar de roupas, escovar os dentes, usar o sanitário, pentear os cabelos, alimentar-se, lavar e enxugar as mãos, banhar-se, beber água.",
+                                fichaCodigo: "EI03EO-MCP07",
+                                objetivo: "Resolver pequenas situações do cotidiano com diálogo.",
+                                promptTitle: "COMBINADOS DA TURMA",
+                                promptText: "Desenhe atitudes que tornam a brincadeira segura e divertida para todos.",
+                                itens: ["ESPERAR A VEZ", "BRINCAR JUNTO", "FALAR COM CALMA", "CUIDAR DO ESPAÇO", "AGRADECER", "ABRAÇAR"],
+                                descricaoPedagogica: "Descrição: Favorecer a autorregulação e a resolução pacífica de conflitos."
+                            }
+                        ]
+                    },
+                    {
+                        id: "corpo-gestos-movimentos",
+                        nome: "Corpo, Gestos e Movimentos",
+                        descricao: "Explora gestos, posturas, equilíbrio e coordenação motora por meio de jogos e movimentos.",
+                        atividades: [
+                            {
+                                codigo: "EI03CG01",
+                                resumo: "Criar com o corpo formas diversificadas de expressão de sentimentos, sensações e emoções, tanto nas situações do cotidiano quanto em brincadeiras.",
+                                fichaCodigo: "EI03CG-MCP01",
+                                objetivo: "Expressar sensações e movimentos corporais.",
+                                promptTitle: "MOVIMENTOS DO CORPO",
+                                promptText: "Desenhe como o corpo se movimenta em cada situação abaixo.",
+                                itens: ["PULAR", "CORRER", "DANÇAR", "ALONGAR", "EQUILIBRAR", "ACENAR"],
+                                descricaoPedagogica: "Descrição: Ampliar a consciência corporal e a expressividade por meio do movimento."
+                            }
+                        ]
+                    },
+                    {
+                        id: "tracos-sons-cores-formas",
+                        nome: "Traços, Sons, Cores e Formas",
+                        descricao: "Vivencia linguagens visuais, sonoras e plásticas explorando cores, texturas e ritmos.",
+                        atividades: [
+                            {
+                                codigo: "EI03TS02",
+                                resumo: "Expressar-se livremente por meio de desenho, pintura, colagem, dobradura e escultura, criando produções bidimensionais e tridimensionais.",
+                                fichaCodigo: "EI03TS-MCP01",
+                                objetivo: "Explorar cores, formas e criações artísticas.",
+                                promptTitle: "CORES E FORMAS",
+                                promptText: "Use os espaços abaixo para criar desenhos com diferentes formas e cores.",
+                                itens: ["CÍRCULO", "QUADRADO", "TRIÂNGULO", "SOL", "ESTRELA", "ARCO-ÍRIS"],
+                                descricaoPedagogica: "Descrição: Estimular a criatividade e a expressão estética infantil."
+                            }
+                        ]
+                    },
+                    {
+                        id: "escuta-fala-pensamento-imaginacao",
+                        nome: "Escuta, Fala, Pensamento e Imaginação",
+                        descricao: "Desenvolve a oralidade, a escuta atenta, o reconto de histórias e a imaginação.",
+                        atividades: [
+                            {
+                                codigo: "EI03EF01",
+                                resumo: "Expressar ideias, desejos e sentimentos sobre suas vivências, por meio da linguagem oral e escrita, de fotos, desenhos e outras formas de expressão.",
+                                fichaCodigo: "EI03EF-MCP01",
+                                objetivo: "Relatar vivências e ampliar o vocabulário.",
+                                promptTitle: "HISTÓRIA E IMAGINAÇÃO",
+                                promptText: "Desenhe cenas da história ou de algo que você imaginou.",
+                                itens: ["PERSONAGEM", "CENÁRIO", "INÍCIO", "MEIO", "FIM", "MEU DESENHO"],
+                                descricaoPedagogica: "Descrição: Incentivar a narrativa oral e a imaginação criadora."
+                            }
+                        ]
+                    },
+                    {
+                        id: "espacos-tempos-quantidades",
+                        nome: "Espaços, Tempos, Quantidades, Relações e Transformações",
+                        descricao: "Observa fenômenos, noções de tempo e espaço, classificações e quantidades no dia a dia.",
+                        atividades: [
+                            {
+                                codigo: "EI03ET07",
+                                resumo: "Relacionar números às suas respectivas quantidades e identificar o antes, o depois e o entre em uma sequência.",
+                                fichaCodigo: "EI03ET-MCP01",
+                                objetivo: "Reconhecer quantidades e noções temporais.",
+                                promptTitle: "TEMPO E QUANTIDADES",
+                                promptText: "Desenhe de acordo com o que se pede em cada quadro.",
+                                itens: ["MANHÃ", "TARDE", "NOITE", "POUCO", "MUITO", "CONTAGEM"],
+                                descricaoPedagogica: "Descrição: Construir noções iniciais de tempo, espaço e quantidade."
+                            }
+                        ]
+                    }
+                ]
+            },
+            "2": {
+                label: "2° Período",
+                faixa: "5 anos a 5 anos 11 meses",
+                campos: [
+                    {
+                        id: "eu-outro-nos",
+                        nome: "O Eu, o Outro e o Nós",
+                        descricao: "Aprofunda a cooperação, empatia, autonomia e participação em combinados coletivos no 2° Período.",
+                        atividades: [
+                            {
+                                codigo: "EI03EO03",
+                                resumo: "Ampliar as relações interpessoais, desenvolvendo atitudes de participação e cooperação.",
+                                fichaCodigo: "EI03EO2-MCP01",
+                                objetivo: "Fortalecer a cooperação e o respeito mútuo no grupo.",
+                                promptTitle: "COOPERAÇÃO EM AÇÃO",
+                                promptText: "Desenhe atitudes de cooperação entre colegas durante as atividades escolares.",
+                                itens: ["COOPERAR", "RESPEITAR", "PARTILHAR", "DIALOGAR", "COLABORAR", "ACOLHER"],
+                                descricaoPedagogica: "Descrição: Consolidar atitudes colaborativas e de convivência respeitosa no 2° Período."
+                            }
+                        ]
+                    },
+                    {
+                        id: "corpo-gestos-movimentos",
+                        nome: "Corpo, Gestos e Movimentos",
+                        descricao: "Aperfeiçoa habilidades motoras, equilíbrio, ritmo e expressão corporal em jogos mais estruturados.",
+                        atividades: [
+                            {
+                                codigo: "EI03CG02",
+                                resumo: "Demonstrar controle e adequação do uso de seu corpo em brincadeiras e jogos, escuta e reconto de histórias, atividades artísticas, entre outras possibilidades.",
+                                fichaCodigo: "EI03CG2-MCP01",
+                                objetivo: "Aprimorar coordenação, ritmo e controle corporal.",
+                                promptTitle: "JOGOS E MOVIMENTOS",
+                                promptText: "Represente por meio de desenhos movimentos de equilíbrio, salto e ritmo.",
+                                itens: ["SALTAR", "EQUILIBRAR", "CORRER", "ARREMESSAR", "DANÇAR", "ALONGAR"],
+                                descricaoPedagogica: "Descrição: Desenvolver maior controle motor e coordenação global na transição do 2° Período."
+                            }
+                        ]
+                    },
+                    {
+                        id: "tracos-sons-cores-formas",
+                        nome: "Traços, Sons, Cores e Formas",
+                        descricao: "Explora composições visuais mais detalhadas, sons, ritmos e elementos da cultura local.",
+                        atividades: [
+                            {
+                                codigo: "EI03TS02",
+                                resumo: "Expressar-se livremente por meio de desenho, pintura, colagem, dobradura e escultura, criando produções bidimensionais e tridimensionais.",
+                                fichaCodigo: "EI03TS2-MCP01",
+                                objetivo: "Criar composições com traços, cores e formas variadas.",
+                                promptTitle: "MINHA COMPOSIÇÃO",
+                                promptText: "Crie composições combinando formas geométricas, cores e traços.",
+                                itens: ["LINHAS", "CORES", "FORMAS", "TEXTURAS", "RITMO", "CRIAÇÃO"],
+                                descricaoPedagogica: "Descrição: Ampliar a autonomia expressiva nas artes visuais e musicais."
+                            }
+                        ]
+                    },
+                    {
+                        id: "escuta-fala-pensamento-imaginacao",
+                        nome: "Escuta, Fala, Pensamento e Imaginação",
+                        descricao: "Amplia a expressão oral, o contato com palavras e a elaboração de ideias e relatos.",
+                        atividades: [
+                            {
+                                codigo: "EI03EF03",
+                                resumo: "Escolher e folhear livros, procurando orientar-se por temas e ilustrações e tentando identificar palavras conhecidas.",
+                                fichaCodigo: "EI03EF2-MCP01",
+                                objetivo: "Relacionar imagens, ideias e palavras do cotidiano.",
+                                promptTitle: "LEITURA E PALAVRAS",
+                                promptText: "Observe cada tema e faça o desenho correspondente.",
+                                itens: ["HISTÓRIA", "PALAVRA", "PERSONAGEM", "IDEIA", "DESCOBERTA", "RELATO"],
+                                descricaoPedagogica: "Descrição: Estimular o interesse pela leitura, escrita espontânea e expressão oral."
+                            }
+                        ]
+                    },
+                    {
+                        id: "espacos-tempos-quantidades",
+                        nome: "Espaços, Tempos, Quantidades, Relações e Transformações",
+                        descricao: "Investiga relações espaciais, medidas, transformações e sequências numéricas no cotidiano.",
+                        atividades: [
+                            {
+                                codigo: "EI03ET07",
+                                resumo: "Relacionar números às suas respectivas quantidades e identificar o antes, o depois e o entre em uma sequência.",
+                                fichaCodigo: "EI03ET2-MCP01",
+                                objetivo: "Explorar sequências, medidas e transformações.",
+                                promptTitle: "RELAÇÕES E TRANSFORMAÇÕES",
+                                promptText: "Represente quantidades, sequências e transformações observadas.",
+                                itens: ["SEQUÊNCIA", "QUANTIDADE", "TAMANHO", "POSIÇÃO", "MUDANÇA", "DESCOBERTA"],
+                                descricaoPedagogica: "Descrição: Consolidar noções matemáticas, espaciais e de investigação do mundo."
+                            }
+                        ]
+                    }
+                ]
+            }
+        };
+
+        const params = new URLSearchParams(window.location.search);
+        let currentPeriod = PERIODOS_DATA[params.get("periodo")] ? params.get("periodo") : "1";
+        let currentFieldIndex = 0;
+        let currentActivity = null;
+        let currentView = "fields";
+
+        const viewFields = document.getElementById("viewFields");
+        const viewActivities = document.getElementById("viewActivities");
+        const viewDetail = document.getElementById("viewDetail");
+
+        const fieldsPeriodTitle = document.getElementById("fieldsPeriodTitle");
+        const fieldsContainer = document.getElementById("fieldsContainer");
+
+        const fieldTitle = document.getElementById("fieldTitle");
+        const fieldDescription = document.getElementById("fieldDescription");
+        const activitiesGrid = document.getElementById("activitiesGrid");
+        const activitiesScrollArea = document.getElementById("activitiesScrollArea");
+
+        const detailCode = document.getElementById("detailCode");
+        const detailObjective = document.getElementById("detailObjective");
+        const detailPromptTitle = document.getElementById("detailPromptTitle");
+        const detailPromptText = document.getElementById("detailPromptText");
+        const detailFacesGrid = document.getElementById("detailFacesGrid");
+        const detailBehavioralDesc = document.getElementById("detailBehavioralDesc");
+
+        const btnTopBack = document.getElementById("btnTopBack");
+        const btnTopBackLabel = document.getElementById("btnTopBackLabel");
+        const btnDetailBack = document.getElementById("btnDetailBack");
+        const btnDownloadPdf = document.getElementById("btnDownloadPdf");
+        const btnScrollUp = document.getElementById("btnScrollUp");
+        const btnScrollDown = document.getElementById("btnScrollDown");
+
+        function updateTabs() {
+            document.querySelectorAll(".period-tab").forEach((tab) => {
+                tab.classList.toggle("active", tab.dataset.period === currentPeriod);
+            });
+        }
+
+        function showView(viewName) {
+            currentView = viewName;
+            viewFields.classList.toggle("hidden", viewName !== "fields");
+            viewActivities.classList.toggle("hidden", viewName !== "activities");
+            viewDetail.classList.toggle("hidden", viewName !== "detail");
+
+            if (viewName === "fields") {
+                btnTopBackLabel.textContent = "Menu Principal";
+            } else if (viewName === "activities") {
+                btnTopBackLabel.textContent = "Campos de Experiência";
+            } else {
+                btnTopBackLabel.textContent = "Atividades";
+            }
+        }
+
+        function renderFields() {
+            const periodData = PERIODOS_DATA[currentPeriod];
+            fieldsPeriodTitle.textContent = `${periodData.label} (${periodData.faixa})`;
+            fieldsContainer.innerHTML = "";
+
+            periodData.campos.forEach((campo, index) => {
+                const card = document.createElement("div");
+                card.className = "field-card";
+                card.innerHTML = `
+                    <div>
+                        <h3>${campo.nome}</h3>
+                        <p>${campo.descricao}</p>
+                    </div>
+                    <span class="field-link-hint">Ver atividades →</span>
+                `;
+                card.addEventListener("click", () => openActivities(index));
+                fieldsContainer.appendChild(card);
+            });
+
+            showView("fields");
+        }
+
+        function openActivities(index) {
+            currentFieldIndex = index;
+            const campo = PERIODOS_DATA[currentPeriod].campos[currentFieldIndex];
+
+            fieldTitle.textContent = campo.nome;
+            fieldDescription.textContent = campo.descricao;
+            activitiesGrid.innerHTML = "";
+
+            campo.atividades.forEach((atividade) => {
+                const card = document.createElement("div");
+                card.className = "activity-card";
+                card.innerHTML = `
+                    <div>
+                        <div class="bncc-code">${atividade.codigo}</div>
+                        <p class="bncc-text">${atividade.resumo}</p>
+                    </div>
+                    <button type="button" class="btn-ver-atividade">Ver Atividade</button>
+                `;
+                card.querySelector(".btn-ver-atividade").addEventListener("click", () => {
+                    openDetail(atividade);
+                });
+                activitiesGrid.appendChild(card);
+            });
+
+            activitiesScrollArea.scrollTop = 0;
+            showView("activities");
+        }
+
+        function openDetail(atividade) {
+            currentActivity = atividade;
+            detailCode.textContent = atividade.fichaCodigo;
+            detailObjective.textContent = atividade.objetivo;
+            detailPromptTitle.textContent = atividade.promptTitle;
+            detailPromptText.textContent = atividade.promptText;
+            detailBehavioralDesc.textContent = atividade.descricaoPedagogica;
+
+            detailFacesGrid.innerHTML = "";
+            atividade.itens.forEach((item) => {
+                const slot = document.createElement("div");
+                slot.className = "face-slot";
+                slot.innerHTML = `
+                    <div class="face-circle"></div>
+                    <div class="face-label">${item}</div>
+                `;
+                detailFacesGrid.appendChild(slot);
+            });
+
+            showView("detail");
+        }
+
+        document.querySelectorAll(".period-tab").forEach((tab) => {
+            tab.addEventListener("click", () => {
+                currentPeriod = tab.dataset.period;
+                updateTabs();
+                renderFields();
+            });
+        });
+
+        btnTopBack.addEventListener("click", () => {
+            if (currentView === "fields") {
+                window.location.href = "menu.html";
+            } else if (currentView === "activities") {
+                showView("fields");
+            } else {
+                showView("activities");
+            }
+        });
+
+        btnDetailBack.addEventListener("click", () => {
+            showView("activities");
+        });
+
+        btnScrollUp.addEventListener("click", () => {
+            activitiesScrollArea.scrollBy({ top: -220, behavior: "smooth" });
+        });
+
+        btnScrollDown.addEventListener("click", () => {
+            activitiesScrollArea.scrollBy({ top: 220, behavior: "smooth" });
+        });
+
+        btnDownloadPdf.addEventListener("click", () => {
+            const fichaElement = document.getElementById("fichaPdfArea");
+            const codigoArquivo = currentActivity ? currentActivity.fichaCodigo : `periodo-${currentPeriod}`;
+            const options = {
+                margin: 10,
+                filename: `planeduc-${codigoArquivo.toLowerCase()}.pdf`,
+                image: { type: "jpeg", quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
+            };
+            html2pdf().from(fichaElement).set(options).save();
+        });
+
+        updateTabs();
+        renderFields();
+    </script>
+</body>
+
+</html>

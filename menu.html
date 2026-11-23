@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planeduc - Menu Principal</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" crossorigin="anonymous">
+    <style>
+        @font-face {
+            font-family: 'IntroScriptDemo';
+            src: url('fonts/IntroScriptDemo-Medium.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Raleway';
+            src: url('fonts/Raleway-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Visby';
+            src: url('fonts/VisbyBold.otf') format('opentype');
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            background-color: #F9F1E2;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+        }
+
+        .menu-card {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 720px;
+            border-radius: 24px;
+            padding: 36px 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Cabeçalho com a coruja estática e título Menu */
+        .menu-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            margin-bottom: 28px;
+        }
+
+        .menu-owl {
+            width: 72px;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .menu-title {
+            font-family: 'IntroScriptDemo', cursive;
+            font-size: 52px;
+            color: #A3292D;
+            line-height: 1;
+        }
+
+        /* Lista de opções do menu */
+        .menu-options {
+            width: 100%;
+            max-width: 560px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .menu-btn {
+            width: 100%;
+            background-color: #8c533e;
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            padding: 15px 22px;
+            font-family: 'Visby', sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(140, 83, 62, 0.22);
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            line-height: 1.35;
+        }
+
+        .menu-btn:hover {
+            background-color: #744331;
+            transform: translateY(-2px);
+        }
+
+        .menu-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Rodapé com botão Voltar */
+        .menu-footer {
+            margin-top: 28px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn-back {
+            background-color: #A3292D;
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 32px;
+            font-family: 'Visby', sans-serif;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(163, 41, 45, 0.25);
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .btn-back:hover {
+            background-color: #821f22;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 600px) {
+            .menu-card {
+                padding: 26px 20px;
+            }
+
+            .menu-title {
+                font-size: 44px;
+            }
+
+            .menu-btn {
+                font-size: 13px;
+                padding: 14px 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="menu-card">
+        <div class="menu-header">
+            <img src="img/coruja.png" alt="Coruja Planeduc" class="menu-owl">
+            <h1 class="menu-title">Menu</h1>
+        </div>
+
+        <div class="menu-options">
+            <button type="button" class="menu-btn" onclick="irParaSecao('1-periodo')">
+                1° Período: 4 anos a 5 anos
+            </button>
+
+            <button type="button" class="menu-btn" onclick="irParaSecao('2-periodo')">
+                2° Período: 5 anos a 5 anos 11 meses
+            </button>
+
+            <button type="button" class="menu-btn" onclick="irParaSecao('atividades-recreativas')">
+                Atividades Recreativas
+            </button>
+
+            <button type="button" class="menu-btn" onclick="irParaSecao('neuroatipicos')">
+                Atividades neuroatípicos (autismo, TDAH, dislexia)
+            </button>
+
+            <button type="button" class="menu-btn" onclick="irParaSecao('aperfeicoamento')">
+                Aperfeiçoamento (cursos livres, pós graduação, especialização)
+            </button>
+        </div>
+
+        <div class="menu-footer">
+            <button type="button" class="btn-back" onclick="voltarAcesso()">Voltar</button>
+        </div>
+    </div>
+
+    <script>
+        function irParaSecao(secao) {
+            // Aqui você pode redirecionar para a página da seção escolhida
+            // Exemplo: window.location.href = `${secao}.html`;
+            console.log('Seção selecionada:', secao);
+        }
+
+        function voltarAcesso() {
+            window.location.href = 'index.html';
+        }
+    </script>
+
+</body>
+
+</html>
