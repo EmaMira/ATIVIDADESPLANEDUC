@@ -35,25 +35,28 @@
 
 body {
     font-family: 'Raleway', sans-serif;
-    /* Fundo suave combinando com a paleta do app */
-    background-color: #f4f5f7;
-    height: 100vh;
+    background-color: #F9F1E2;
+    min-height: 100vh;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
+    padding: 24px 20px;
 }
 
 /* Container Principal do Painel Duplo */
 .container {
     background-color: #fff;
-    width: 960px;
-    height: 580px;
+    width: 100%;
+    max-width: 960px;
+    min-height: 580px;
     border-radius: 20px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
     position: relative;
     overflow: hidden;
     display: flex;
     align-items: center;
+    margin: auto;
 }
 
 .content {
@@ -61,13 +64,13 @@ body {
     height: 100%;
     display: flex;
     justify-content: space-between;
-    position: absolute;
+    position: relative;
 }
 
 /* Colunas (Lateral e Formulário) */
 .first-column {
     flex: 1;
-    background: linear-gradient(135deg, #8c533e, #744331); /* Tom terroso do Planeduc */
+    background: linear-gradient(135deg, #8c533e, #744331);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -98,14 +101,14 @@ body {
 
 .title-primary {
     color: #fff;
-    font-family: 'IntroScriptDemo', cursive; /* Toque especial com a fonte da coruja */
+    font-family: 'IntroScriptDemo', cursive;
     font-size: 42px;
     text-transform: none;
     margin-bottom: 10px;
 }
 
 .title-second {
-    color: #A3292D; /* Cor oficial do Planeduc */
+    color: #A3292D;
     margin-bottom: 20px;
 }
 
@@ -212,4 +215,70 @@ body {
 
 .password:hover {
     color: #A3292D;
+}
+
+/* Rodapé Institucional */
+.site-footer {
+    width: 100%;
+    max-width: 1120px;
+    margin-top: 32px;
+    padding: 20px 24px;
+    border-top: 2px solid #e8d8be;
+    text-align: center;
+    font-family: 'Raleway', sans-serif;
+    color: #5a463a;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.footer-academic {
+    font-family: 'Visby', sans-serif;
+    font-weight: bold;
+    color: #8c533e;
+    font-size: 13px;
+    margin-bottom: 6px;
+}
+
+.footer-academic span {
+    color: #A3292D;
+}
+
+.footer-portal {
+    margin-bottom: 10px;
+    font-size: 12px;
+}
+
+.footer-portal a {
+    color: #A3292D;
+    font-weight: bold;
+    text-decoration: none;
+    border-bottom: 1px dotted #A3292D;
+    transition: opacity 0.2s;
+}
+
+.footer-portal a:hover {
+    opacity: 0.8;
+}
+
+.footer-legal {
+    max-width: 820px;
+    margin: 0 auto;
+    font-size: 11px;
+    color: #6e5c50;
+}
+
+@media (max-width: 768px) {
+    .container {
+        min-height: auto;
+    }
+
+    .content {
+        flex-direction: column;
+    }
+
+    .first-column,
+    .second-column {
+        width: 100%;
+        padding: 28px 20px;
+    }
 }
