@@ -1,227 +1,32 @@
-/* Importação das fontes locais do Planeduc */
-@font-face {
-    font-family: 'IntroScriptDemo';
-    src: url('../fonts/IntroScriptDemo-Medium.otf') format('opentype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Raleway';
-    src: url('../fonts/Raleway-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Visby';
-    src: url('../fonts/VisbyBold.otf') format('opentype');
-    font-weight: bold;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Visby';
-    src: url('../fonts/VisbyMedium.otf') format('opentype');
-    font-weight: 500;
-    font-style: normal;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
     font-family: 'Raleway', sans-serif;
     background-color: #F9F1E2;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
-    padding: 24px 20px;
+    padding: 32px 20px 24px;
 }
 
-/* Container Principal do Painel Duplo */
 .container {
-    background-color: #fff;
+    background-color: #ffffff;
     width: 100%;
     max-width: 960px;
-    min-height: 580px;
+    min-height: 540px;
     border-radius: 20px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
     position: relative;
     overflow: hidden;
     display: flex;
     align-items: center;
-    margin: auto;
+    margin: 0 auto;
+    flex-shrink: 0;
 }
 
-.content {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: space-between;
-    position: relative;
-}
-
-/* Colunas (Lateral e Formulário) */
-.first-column {
-    flex: 1;
-    background: linear-gradient(135deg, #8c533e, #744331);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: #fff;
-    padding: 30px;
-}
-
-.second-column {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 40px;
-    background-color: #fff;
-}
-
-/* Tipografia com as fontes do Planeduc */
-.title {
-    font-family: 'Visby', sans-serif;
-    font-size: 28px;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.title-primary {
-    color: #fff;
-    font-family: 'IntroScriptDemo', cursive;
-    font-size: 42px;
-    text-transform: none;
-    margin-bottom: 10px;
-}
-
-.title-second {
-    color: #A3292D;
-    margin-bottom: 20px;
-}
-
-.description {
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 20px;
-    color: #f0e6e6;
-}
-
-.description-second {
-    color: #666;
-    margin-bottom: 15px;
-}
-
-/* Formulários e Inputs */
-.form {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 300px;
-}
-
-.label-input {
-    background-color: #f9f9f9;
-    border: 1px solid #e0e0e0;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    margin: 8px 0;
-    padding: 0 15px;
-    transition: all 0.3s ease;
-}
-
-.label-input:focus-within {
-    border-color: #8c533e;
-    background-color: #fff;
-    box-shadow: 0 0 0 3px rgba(140, 83, 62, 0.15);
-}
-
-.icon-modify {
-    color: #8c533e;
-    margin-right: 10px;
-    font-size: 14px;
-}
-
-.label-input input {
-    width: 100%;
-    border: none;
-    outline: none;
-    background: transparent;
-    padding: 12px 0;
-    font-family: 'Raleway', sans-serif;
-    font-size: 14px;
-    color: #333;
-}
-
-/* Botões Estilizados */
-.btn {
-    border-radius: 12px;
-    border: none;
-    font-family: 'Visby', sans-serif;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    padding: 12px 25px;
-    text-transform: uppercase;
-    transition: all 0.3s ease;
-    margin-top: 15px;
-}
-
-.btn-primary {
-    background-color: transparent;
-    border: 2px solid #fff;
-    color: #fff;
-    margin-top: 20px;
-}
-
-.btn-primary:hover {
-    background-color: #fff;
-    color: #8c533e;
-}
-
-.btn-second {
-    background-color: #8c533e;
-    color: #fff;
-    box-shadow: 0 4px 12px rgba(140, 83, 62, 0.25);
-}
-
-.btn-second:hover {
-    background-color: #744331;
-    transform: translateY(-2px);
-}
-
-/* Links auxiliares */
-.password {
-    color: #666;
-    font-size: 12px;
-    text-decoration: none;
-    margin: 10px 0;
-    text-align: right;
-    transition: color 0.2s;
-}
-
-.password:hover {
-    color: #A3292D;
-}
-
-/* Rodapé Institucional */
 .site-footer {
     width: 100%;
-    max-width: 1120px;
-    margin-top: 32px;
+    max-width: 960px;
+    margin: 36px auto 0;
     padding: 20px 24px;
     border-top: 2px solid #e8d8be;
     text-align: center;
@@ -229,56 +34,4 @@ body {
     color: #5a463a;
     font-size: 12px;
     line-height: 1.6;
-}
-
-.footer-academic {
-    font-family: 'Visby', sans-serif;
-    font-weight: bold;
-    color: #8c533e;
-    font-size: 13px;
-    margin-bottom: 6px;
-}
-
-.footer-academic span {
-    color: #A3292D;
-}
-
-.footer-portal {
-    margin-bottom: 10px;
-    font-size: 12px;
-}
-
-.footer-portal a {
-    color: #A3292D;
-    font-weight: bold;
-    text-decoration: none;
-    border-bottom: 1px dotted #A3292D;
-    transition: opacity 0.2s;
-}
-
-.footer-portal a:hover {
-    opacity: 0.8;
-}
-
-.footer-legal {
-    max-width: 820px;
-    margin: 0 auto;
-    font-size: 11px;
-    color: #6e5c50;
-}
-
-@media (max-width: 768px) {
-    .container {
-        min-height: auto;
-    }
-
-    .content {
-        flex-direction: column;
-    }
-
-    .first-column,
-    .second-column {
-        width: 100%;
-        padding: 28px 20px;
-    }
 }
