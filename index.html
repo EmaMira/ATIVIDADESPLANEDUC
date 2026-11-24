@@ -409,6 +409,61 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script type="module" src="js/app.js"></script>
+    /* Ajuste no body para acomodar o rodapé naturalmente */
+body {
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Estilização do Rodapé Institucional */
+.site-footer {
+    width: 100%;
+    max-width: 1120px;
+    margin-top: 32px;
+    padding: 20px 24px;
+    border-top: 2px solid #e8d8be;
+    text-align: center;
+    font-family: 'Raleway', sans-serif;
+    color: #5a463a;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.footer-academic {
+    font-family: 'Visby', sans-serif;
+    font-weight: bold;
+    color: #8c533e;
+    font-size: 13px;
+    margin-bottom: 6px;
+}
+
+.footer-academic span {
+    color: #A3292D;
+}
+
+.footer-portal {
+    margin-bottom: 10px;
+    font-size: 12px;
+}
+
+.footer-portal a {
+    color: #A3292D;
+    font-weight: bold;
+    text-decoration: none;
+    border-bottom: 1px dotted #A3292D;
+    transition: opacity 0.2s;
+}
+
+.footer-portal a:hover {
+    opacity: 0.8;
+}
+
+.footer-legal {
+    max-width: 820px;
+    margin: 0 auto;
+    font-size: 11px;
+    color: #6e5c50;
+}
 </body>
 
 </html>
