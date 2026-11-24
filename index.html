@@ -6,439 +6,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Planeduc - Acesso</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" crossorigin="anonymous">
-    <style>
-        @font-face {
-            font-family: 'IntroScriptDemo';
-            src: url('fonts/IntroScriptDemo-Medium.otf') format('opentype');
-            font-weight: normal;
-            font-style: normal;
-        }
-
-        @font-face {
-            font-family: 'Raleway';
-            src: url('fonts/Raleway-Regular.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-        }
-
-        @font-face {
-            font-family: 'Visby';
-            src: url('fonts/VisbyBold.otf') format('opentype');
-            font-weight: bold;
-            font-style: normal;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Raleway', sans-serif;
-            background-color: #F9F1E2;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .main-wrapper {
-            position: relative;
-            margin: 70px auto 0;
-            width: 100%;
-            max-width: 900px;
-        }
-
-        /* Coruja fixa no topo (sem animação) */
-        .owl-top-header {
-            position: absolute;
-            top: -98px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 160px;
-            height: auto;
-            object-fit: contain;
-            z-index: 20;
-            pointer-events: none;
-        }
-
-        /* Card principal */
-        .container {
-            background-color: #ffffff;
-            width: 100%;
-            height: 520px;
-            border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Camada base com os dois formulários lado a lado */
-        .forms-base {
-            display: flex;
-            width: 100%;
-            height: 100%;
-        }
-
-        .form-box {
-            width: 50%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 40px;
-            background-color: #ffffff;
-            transition: opacity 0.35s ease;
-        }
-
-        .title-form {
-            font-family: 'Visby', sans-serif;
-            font-size: 26px;
-            font-weight: bold;
-            color: #A3292D;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .subtitle-form {
-            font-size: 13px;
-            color: #666;
-            margin-bottom: 22px;
-            text-align: center;
-        }
-
-        .form {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            max-width: 320px;
-        }
-
-        .label-input {
-            background-color: #faf9f6;
-            border: 1px solid #e8e1d5;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            margin: 8px 0;
-            padding: 0 16px;
-            transition: all 0.25s ease;
-        }
-
-        .label-input:focus-within {
-            border-color: #8c533e;
-            background-color: #ffffff;
-            box-shadow: 0 0 0 3px rgba(140, 83, 62, 0.1);
-        }
-
-        .icon-modify {
-            color: #8c533e;
-            margin-right: 12px;
-            font-size: 14px;
-        }
-
-        .label-input input {
-            width: 100%;
-            border: none;
-            outline: none;
-            background: transparent;
-            padding: 12px 0;
-            font-family: 'Raleway', sans-serif;
-            font-size: 14px;
-            color: #333;
-        }
-
-        .forgot-link {
-            font-size: 12px;
-            color: #666;
-            text-decoration: none;
-            text-align: right;
-            margin: 6px 0 4px;
-            transition: color 0.2s ease;
-        }
-
-        .forgot-link:hover {
-            color: #A3292D;
-        }
-
-        .btn-submit {
-            background-color: #8c533e;
-            color: #ffffff;
-            border-radius: 12px;
-            border: none;
-            font-family: 'Visby', sans-serif;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            padding: 13px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-top: 14px;
-            box-shadow: 0 4px 12px rgba(140, 83, 62, 0.25);
-            transition: background-color 0.2s ease, transform 0.2s ease;
-        }
-
-        .btn-submit:hover {
-            background-color: #744331;
-            transform: translateY(-2px);
-        }
-
-        /* Painel deslizante marrom com a animação de troca */
-        .slide-panel {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 50%;
-            height: 100%;
-            background-color: #8c533e;
-            color: #ffffff;
-            z-index: 10;
-            overflow: hidden;
-            transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        /* Quando ativo (modo Login), desliza o painel para a esquerda */
-        .container.login-mode .slide-panel {
-            transform: translateX(-100%);
-        }
-
-        .slide-inner {
-            position: relative;
-            width: 200%;
-            height: 100%;
-            display: flex;
-            transform: translateX(0);
-            transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        .container.login-mode .slide-inner {
-            transform: translateX(-50%);
-        }
-
-        .slide-message {
-            width: 50%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 40px;
-        }
-
-        .slide-title {
-            font-family: 'IntroScriptDemo', cursive;
-            font-size: 48px;
-            color: #ffffff;
-            margin-bottom: 12px;
-        }
-
-        .slide-description {
-            font-size: 14px;
-            color: #f3e9e1;
-            line-height: 1.5;
-            max-width: 280px;
-            margin-bottom: 24px;
-        }
-
-        .btn-switch {
-            background-color: transparent;
-            border: 2px solid #ffffff;
-            color: #ffffff;
-            border-radius: 12px;
-            font-family: 'Visby', sans-serif;
-            font-size: 13px;
-            font-weight: bold;
-            cursor: pointer;
-            padding: 11px 30px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: background-color 0.25s ease, color 0.25s ease, transform 0.2s ease;
-        }
-
-        .btn-switch:hover {
-            background-color: #ffffff;
-            color: #8c533e;
-            transform: translateY(-2px);
-        }
-
-        /* Estilização do Rodapé Institucional */
-        .site-footer {
-            width: 100%;
-            max-width: 1120px;
-            margin-top: 32px;
-            padding: 20px 24px;
-            border-top: 2px solid #e8d8be;
-            text-align: center;
-            font-family: 'Raleway', sans-serif;
-            color: #5a463a;
-            font-size: 12px;
-            line-height: 1.6;
-        }
-
-        .footer-academic {
-            font-family: 'Visby', sans-serif;
-            font-weight: bold;
-            color: #8c533e;
-            font-size: 13px;
-            margin-bottom: 6px;
-        }
-
-        .footer-academic span {
-            color: #A3292D;
-        }
-
-        .footer-portal {
-            margin-bottom: 10px;
-            font-size: 12px;
-        }
-
-        .footer-portal a {
-            color: #A3292D;
-            font-weight: bold;
-            text-decoration: none;
-            border-bottom: 1px dotted #A3292D;
-            transition: opacity 0.2s;
-        }
-
-        .footer-portal a:hover {
-            opacity: 0.8;
-        }
-
-        .footer-legal {
-            max-width: 820px;
-            margin: 0 auto;
-            font-size: 11px;
-            color: #6e5c50;
-        }
-
-        /* Responsividade para telas menores */
-        @media (max-width: 768px) {
-            .container {
-                height: auto;
-                min-height: 540px;
-            }
-
-            .forms-base {
-                flex-direction: column;
-            }
-
-            .form-box {
-                width: 100%;
-                padding: 32px 24px;
-            }
-
-            .slide-panel {
-                position: static;
-                width: 100%;
-                height: auto;
-                transform: none !important;
-            }
-
-            .slide-inner {
-                width: 100%;
-                transform: none !important;
-            }
-
-            .slide-message {
-                width: 100%;
-                padding: 30px 24px;
-            }
-
-            .msg-to-login {
-                display: flex;
-            }
-
-            .msg-to-signup {
-                display: none;
-            }
-
-            .container.login-mode .msg-to-login {
-                display: none;
-            }
-
-            .container.login-mode .msg-to-signup {
-                display: flex;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-    <div class="main-wrapper">
-        <div class="container" id="authContainer">
-            <!-- Formulários -->
-            <div class="forms-base">
-                <!-- Cadastro (esquerda) -->
-                <div class="form-box signup-box">
-                    <h2 class="title-form">Criar Conta</h2>
-                    <p class="subtitle-form">ou use seu e-mail para registro:</p>
+    <div class="container" id="authContainer">
+        <div class="content">
+            <!-- Coluna Esquerda / Formulário de Cadastro -->
+            <div class="second-column signup-box">
+                <h2 class="title title-second">Criar Conta</h2>
+                <p class="description description-second">ou use seu e-mail para registro:</p>
 
-                    <form class="form" id="signupForm">
-                        <label class="label-input" for="signupName">
-                            <i class="far fa-user icon-modify"></i>
-                            <input type="text" id="signupName" placeholder="Nome Completo" required>
-                        </label>
+                <form class="form" id="signupForm">
+                    <label class="label-input" for="signupName">
+                        <i class="far fa-user icon-modify"></i>
+                        <input type="text" id="signupName" placeholder="Nome Completo" required>
+                    </label>
 
-                        <label class="label-input" for="signupEmail">
-                            <i class="far fa-envelope icon-modify"></i>
-                            <input type="email" id="signupEmail" placeholder="E-mail" required>
-                        </label>
+                    <label class="label-input" for="signupEmail">
+                        <i class="far fa-envelope icon-modify"></i>
+                        <input type="email" id="signupEmail" placeholder="E-mail" required>
+                    </label>
 
-                        <label class="label-input" for="signupPassword">
-                            <i class="fas fa-lock icon-modify"></i>
-                            <input type="password" id="signupPassword" placeholder="Senha" required>
-                        </label>
+                    <label class="label-input" for="signupPassword">
+                        <i class="fas fa-lock icon-modify"></i>
+                        <input type="password" id="signupPassword" placeholder="Senha" required>
+                    </label>
 
-                        <button type="submit" class="btn-submit">Cadastrar</button>
-                    </form>
-                </div>
-
-                <!-- Login (direita) -->
-                <div class="form-box login-box">
-                    <h2 class="title-form">Entrar</h2>
-                    <p class="subtitle-form">acesse com seu e-mail e senha:</p>
-
-                    <form class="form" id="loginForm">
-                        <label class="label-input" for="loginEmail">
-                            <i class="far fa-envelope icon-modify"></i>
-                            <input type="email" id="loginEmail" placeholder="E-mail" required>
-                        </label>
-
-                        <label class="label-input" for="loginPassword">
-                            <i class="fas fa-lock icon-modify"></i>
-                            <input type="password" id="loginPassword" placeholder="Senha" required>
-                        </label>
-
-                        <a href="#" class="forgot-link">Esqueceu sua senha?</a>
-                        <button type="submit" class="btn-submit">Entrar</button>
-                    </form>
-                </div>
+                    <button type="submit" class="btn btn-second">Cadastrar</button>
+                </form>
             </div>
 
-            <!-- Painel marrom animado que alterna entre Cadastro e Login -->
-            <div class="slide-panel">
-                <div class="slide-inner">
-                    <!-- Mensagem exibida quando o formulário de Cadastro está visível -->
-                    <div class="slide-message msg-to-login">
-                        <h2 class="slide-title">Olá, Educador!</h2>
-                        <p class="slide-description">Já possui cadastro? Entre com seus dados para acessar as atividades.</p>
-                        <button type="button" class="btn-switch" id="goToLogin">Entrar</button>
-                    </div>
-
-                    <!-- Mensagem exibida quando o formulário de Login está visível -->
-                    <div class="slide-message msg-to-signup">
-                        <h2 class="slide-title">Bem-vindo(a)!</h2>
-                        <p class="slide-description">Ainda não tem conta? Cadastre-se e comece a planejar com a BNCC.</p>
-                        <button type="button" class="btn-switch" id="goToSignup">Cadastrar</button>
-                    </div>
-                </div>
+            <!-- Coluna Direita / Painel de Boas-vindas -->
+            <div class="first-column">
+                <h2 class="title title-primary">Olá, Educador!</h2>
+                <p class="description">Já possui cadastro? Entre com seus dados para acessar as atividades.</p>
+                <button type="button" class="btn btn-primary" id="toggleAuthMode">Entrar</button>
             </div>
         </div>
     </div>
@@ -459,18 +63,37 @@
 
     <script>
         const authContainer = document.getElementById('authContainer');
-        const goToLoginBtn = document.getElementById('goToLogin');
-        const goToSignupBtn = document.getElementById('goToSignup');
+        const toggleAuthModeBtn = document.getElementById('toggleAuthMode');
+        const signupForm = document.getElementById('signupForm');
+        const titleSecond = document.querySelector('.title-second');
+        const subtitleSecond = document.querySelector('.description-second');
+        const submitBtn = signupForm.querySelector('button[type="submit"]');
+        const nameLabel = document.getElementById('signupName').closest('.label-input');
 
-        goToLoginBtn.addEventListener('click', () => {
-            authContainer.classList.add('login-mode');
-        });
+        let isLoginView = false;
 
-        goToSignupBtn.addEventListener('click', () => {
-            authContainer.classList.remove('login-mode');
+        toggleAuthModeBtn.addEventListener('click', () => {
+            isLoginView = !isLoginView;
+
+            if (isLoginView) {
+                titleSecond.textContent = 'Entrar';
+                subtitleSecond.textContent = 'acesse com seu e-mail e senha:';
+                nameLabel.style.display = 'none';
+                document.getElementById('signupName').required = false;
+                submitBtn.textContent = 'Entrar';
+                toggleAuthModeBtn.textContent = 'Cadastrar';
+                authContainer.classList.add('login-mode');
+            } else {
+                titleSecond.textContent = 'Criar Conta';
+                subtitleSecond.textContent = 'ou use seu e-mail para registro:';
+                nameLabel.style.display = 'flex';
+                document.getElementById('signupName').required = true;
+                submitBtn.textContent = 'Cadastrar';
+                toggleAuthModeBtn.textContent = 'Entrar';
+                authContainer.classList.remove('login-mode');
+            }
         });
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script type="module" src="js/app.js"></script>
 </body>
 
